@@ -1,6 +1,8 @@
-# Mind — architecture
+# Mind — specification
 
-Working notes on the Mind architecture. Markdown is the source of truth; the HTML files are thin viewers that render the markdown locally (no server required).
+Working notes on the Mind architecture — a privacy-first, pod-centric system spec. Markdown is the source of truth; the HTML files are thin viewers that render the markdown locally (no server required).
+
+**Live site:** https://huhn511.github.io/mind-specification/
 
 ## Folder layout
 
