@@ -1,12 +1,40 @@
-# Mind
+<div class="doc-hero">
 
-Most apps today store *your* data on *their* servers. Mind inverts that.
+<div class="mind-mark panel" aria-label="Decentralized Network In Mind, collapsing into MIND"><div class="ln"><span class="ch c" style="--dx:20ch"><span class="g">D</span></span><span class="ch l"><span class="g">e</span></span><span class="ch l"><span class="g">c</span></span><span class="ch l"><span class="g">e</span></span><span class="ch l"><span class="g">n</span></span><span class="ch l"><span class="g">t</span></span><span class="ch l"><span class="g">r</span></span><span class="ch l"><span class="g">a</span></span><span class="ch l"><span class="g">l</span></span><span class="ch l"><span class="g">i</span></span><span class="ch l"><span class="g">z</span></span><span class="ch l"><span class="g">e</span></span><span class="ch l"><span class="g">d</span></span><span class="ch l"><span class="g">&nbsp;</span></span><span class="ch c" style="--dx:2ch"><span class="g">N</span></span><span class="ch l"><span class="g">e</span></span><span class="ch l"><span class="g">t</span></span><span class="ch l"><span class="g">w</span></span><span class="ch l"><span class="g">o</span></span><span class="ch l"><span class="g">r</span></span><span class="ch l"><span class="g">k</span></span><span class="ch l"><span class="g">&nbsp;</span></span><span class="ch c" style="--dx:-10ch"><span class="g">I</span></span><span class="ch l"><span class="g">n</span></span><span class="ch l"><span class="g">&nbsp;</span></span><span class="ch c" style="--dx:-17ch"><span class="g">M</span></span><span class="ch l"><span class="g">i</span></span><span class="ch l"><span class="g">n</span></span><span class="ch l"><span class="g">d</span></span></div></div>
 
-Your data lives in your own store — a **pod**, built on the open [Solid](https://solidproject.org) standard. Apps and background workers read and write your pod over HTTP. Switch apps, your data stays. Switch hosts, your apps follow you. The same calendar entry can be shown by your scheduling app, used by your assistant agent, and shared with a friend's pod — because there's only one copy, and it's yours.
+<h1 class="doc-hero-title">Your data. Your apps. Your AI.</h1>
 
-The diagram below shows the four layers, top-down. Apps are what you click; workers do background work on your behalf; the pod is the canonical store; the WebID is your portable login. Sections below explain each one.
+<p class="doc-hero-sub">A privacy-first home for your data — one place you own, where your apps and AI agents all work together.</p>
 
-## The picture
+</div>
+
+<div class="diagram-block diagram-hero" aria-label="Mind's mission, after Tim Berners-Lee's vision for the web">
+  <div class="hero-pretitle">MIND'S MISSION</div>
+  <blockquote class="hero-quote">
+    <span class="hero-quote-mark" aria-hidden="true">“</span>This is for everyone.<span class="hero-quote-mark" aria-hidden="true">”</span>
+  </blockquote>
+  <div class="hero-attrib">
+    Tim Berners-Lee &nbsp;·&nbsp; London 2012 Olympic opening ceremony &nbsp;·&nbsp; tweeted live from the original NeXT cube that hosted the first web server
+  </div>
+  <div class="hero-body">
+    The web he invented was open to all. Two decades on, the same web is fenced off — your data sits in vendors' databases, your AI's memory belongs to whichever model you used last, your photos to a platform.
+  </div>
+  <div class="hero-body hero-body-strong">
+    Mind is the next move of "for everyone". Same open web. Same <a href="https://solidproject.org" target="_blank" rel="noopener">Solid standard</a> Berners-Lee himself started in 2016 to fix exactly this. This time the line we draw is: <strong>privacy is also for everyone</strong> — by architecture, not by toggle, not by trust-us promise.
+  </div>
+</div>
+
+## The short version
+
+**Solid** is an open web standard that lets you keep all your data in one private space you own — called a **pod** — that apps read and write *only with your permission*, instead of every app keeping its own copy of you.
+
+**Mind** is an extension of Solid: a small shared rulebook (the **Mind Protocol**) plus a family of apps and AI agents that all follow it — so they work together on your one pod, and nothing can lock you in.
+
+In short: your data lives in your pod. Apps and agents gather around it — and you can swap any of them without losing a thing.
+
+## How Mind is shaped
+
+Most apps today store *your* data on *their* servers. Mind inverts that. Your data lives in your own store — a **pod**, built on Solid. Apps and background workers read and write your pod over HTTP; they don't call each other.
 
 <div class="diagram-block diagram-layers" aria-label="Mind architecture layers, from apps down to identity">
 
@@ -20,11 +48,16 @@ The diagram below shows the four layers, top-down. Apps are what you click; work
     </div>
     <div class="layer-body">
       <a class="chip" href="apps.html#compass">Compass</a>
+      <a class="chip" href="apps.html#agents">Agents</a>
+      <a class="chip" href="apps.html#drive">Drive</a>
+      <a class="chip" href="apps.html#docs">Docs</a>
       <a class="chip" href="apps.html#marketplace">Marketplace</a>
-      <a class="chip" href="apps.html#health">Health</a>
       <a class="chip" href="apps.html#chat">Chat</a>
-      <a class="chip" href="apps.html#codespaces">Codespaces</a>
       <a class="chip" href="apps.html#social">Social</a>
+      <a class="chip" href="apps.html#codespaces">Codespaces</a>
+      <a class="chip" href="apps.html#health">Health</a>
+      <a class="chip" href="apps.html#video">Video</a>
+      <a class="chip" href="apps.html#flow">Flow</a>
     </div>
   </div>
 
@@ -48,7 +81,7 @@ The diagram below shows the four layers, top-down. Apps are what you click; work
       <span class="layer-num">02</span>
       <div class="layer-meta">
         <div class="layer-name">POD</div>
-        <div class="layer-tag">where your stuff lives · canonical</div>
+        <div class="layer-tag">where your stuff lives · the source of truth</div>
       </div>
     </div>
     <div class="layer-body">
@@ -71,15 +104,15 @@ The diagram below shows the four layers, top-down. Apps are what you click; work
 
 </div>
 
-### How to read it
+Four layers, top-down. **Apps** are what you click — fifteen in the Mind family today (see [Apps](apps.md)). **Workers** are background machinery — indexers, bridges, agent runtimes — that hold your pod auth and do the things apps shouldn't do in your browser tab. They both meet at the **Pod**, which is where your data really lives — the single source of truth. The **WebID** at the bottom isn't a data flow; it's the identity rail your pod is named by, so apps and pod hosts can find each other across the web.
 
-Layers stack top-to-bottom. The arrow of dependency points downward: **Apps** and **Workers** both read & write the **Pod** directly — they don't call each other; they meet at the pod. The dotted relation at the bottom is an identity reference (your pod is *named by* your WebID), not a data flow. Every connection above the WebID rail runs over the **Mind Protocol** — a small spec, not a thing that runs.
+Switch apps, your data stays. Switch hosts, your apps follow you. Every connection above the WebID rail speaks the **Mind Protocol** — a small spec, not a thing that runs. The [Roadmap](roadmap.md) says which of these apps to ship first, and why.
 
-### Naming convention
+## Naming convention
 
-Apps in the Mind family are written **with a capital letter** — Compass, Marketplace, Health, Chat, Codespaces, Social. The capital signals a decentralized app: it operates on *your* pod, not on a vendor's database, and the same product name is portable across pod hosts. The lowercase form (`compass`, `marketplace`, …) refers to the folder in your pod (`/apps/marketplace/`) or the codebase, not the product.
+Apps in the Mind family are written **with a capital letter** — Compass, Agents, Drive, Docs, Marketplace, Chat, Social, Codespaces, Health, Video, Flow, Todo, Calendar, Contacts, Builder (and the Dock shell). The capital signals a decentralized app: it operates on *your* pod, not on a vendor's database, and the same product name is portable across pod hosts. The lowercase form (`compass`, `marketplace`, …) refers to the folder in your pod (`/apps/marketplace/`) or the codebase, not the product.
 
-Each app eventually gets its own page — for now the diagram chips link to the section below where they're all listed.
+The diagram chips above link straight to each app's section in [Apps](apps.md).
 
 ---
 
@@ -299,7 +332,7 @@ Pods aren't owned by any company. You pick where yours runs — and you can move
 
 ### How Mind fits
 
-Mind is a family of apps and workers that all use Solid pods as their canonical storage. The **Mind Protocol** is a small extra agreement on top of Solid — saying things like "AI agents live under `/agents/`" and "this is the shape of an agent's roster file." Once apps agree on those conventions, they can interoperate freely.
+Mind is a family of apps and workers that all use Solid pods as their single source of truth. The **Mind Protocol** is a small extra agreement on top of Solid — saying things like "AI agents live under `/agents/`" and "this is the shape of an agent's roster file." Once apps agree on those conventions, they can interoperate freely.
 
 Solid itself comes from [solidproject.org](https://solidproject.org) — a web standard started by Tim Berners-Lee (the inventor of the web). The goal: give people back ownership of their data using the existing web technologies (URLs, HTTP).
 
@@ -325,7 +358,7 @@ Each app gets its own folder under `/apps/{name}/` in your pod (see §1) — san
 Apps come in two shapes:
 
 - **Web apps** — Marketplace, Health, Chat, Codespaces' web side, Social. You visit a URL, sign in with WebID, nothing to install.
-- **Installed apps** — Compass, Codespaces' CLI. Run on your machine. May hold local state (UI preferences, operator scratch, cached views), but the canonical data still lives in your pod.
+- **Installed apps** — Compass, Codespaces' CLI. Run on your machine. May hold local state (UI preferences, operator scratch, cached views), but the real data still lives in your pod.
 
 Both shapes speak the same Mind Protocol — only the packaging differs. **Codespaces** is the example that ships both: the web side for managing your sites, the CLI (`codespaces` on your terminal) for `git push`-ing into the pod.
 
@@ -399,7 +432,7 @@ Who interacts with Mind, and what external systems Mind depends on.
     </div>
     <div class="c4-actor external">
       <div class="c4-actor-type">EXTERNAL</div>
-      <div class="c4-actor-name">Peer Mind Pods</div>
+      <div class="c4-actor-name">Peer pods</div>
       <div class="c4-actor-desc">Other people's pods. Receive LDN messages from yours and vice versa.</div>
     </div>
     <div class="c4-actor external">
@@ -412,7 +445,7 @@ Who interacts with Mind, and what external systems Mind depends on.
     <span class="c4-rel">Pod Owner <span class="c4-rel-arrow">→</span> Mind <span class="c4-rel-detail">uses (via apps + Compass)</span></span>
     <span class="c4-rel">Mind <span class="c4-rel-arrow">→</span> Pod Host <span class="c4-rel-detail">stores data in (HTTPS, Solid)</span></span>
     <span class="c4-rel">Mind <span class="c4-rel-arrow">→</span> OIDC Provider <span class="c4-rel-detail">authenticates against (Solid-OIDC)</span></span>
-    <span class="c4-rel">Mind <span class="c4-rel-arrow">↔</span> Peer Mind Pods <span class="c4-rel-detail">exchanges (LDN, §4)</span></span>
+    <span class="c4-rel">Mind <span class="c4-rel-arrow">↔</span> Peer pods <span class="c4-rel-detail">exchanges (LDN, §4)</span></span>
   </div>
 </div>
 
@@ -446,7 +479,7 @@ What's inside Mind. Each container is a separately-deployable runnable unit.
         <div class="c4-container-type">[CONTAINER · DATA STORE]</div>
         <div class="c4-container-name">Pod</div>
         <div class="c4-container-tech">Solid pod (HTTP)</div>
-        <div class="c4-container-desc">The canonical store. All other containers read/write through it.</div>
+        <div class="c4-container-desc">The source of truth. All other containers read and write through it.</div>
       </div>
     </div>
   </div>
@@ -597,7 +630,7 @@ More can show up here over time. The protocol is what makes them possible withou
 
 Four load-bearing choices:
 
-- **Pod is canonical.** Only your pod is the source of truth for your stuff. Apps and workers can be replaced without touching it.
+- **Pod is the source of truth.** Only your pod is the real, authoritative copy of your data. Apps and workers can be replaced without touching it.
   *Consequence: there is no "export my data" feature, because nothing is being held hostage in the first place.*
 
 - **Workers are replaceable.** Swap the agent runtime out and your data — including your agents' memory and what they've learned about you — stays where it is.
