@@ -28,7 +28,6 @@ PAIRS = [
     ("src/protocol/03-services-manifest.md", "site/protocol-03.html"),
     ("src/protocol/capabilities.md",         "site/capabilities.html"),
     ("src/protocol/04-ldn-inbox-outbox.md",  "site/protocol-04.html"),
-    ("src/protocol/05-vocabulary.md",      "site/protocol-05.html"),
 ]
 
 START = "<!-- BUILD:MD-START -->"
