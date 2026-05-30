@@ -1,21 +1,21 @@
-# Mind Protocol §3 — Capability companion docs
+# Capabilities reference
 
 Interface contracts for each capability IRI listed in the [§3 services manifest](03-services-manifest.md). A service that declares `mind:offers <capability>` MUST implement the contract specified here. Apps and workers that *consume* a capability MUST work against any service that declares it.
 
+This is a **companion reference** to §3, not a separate protocol section. §3 says *which* capability a service offers; this document says *what shape* its request and response take, so two providers of the same capability are drop-in interchangeable.
+
 <div class="diagram-block protocol-intro">
   <div class="protocol-intro-meta">
-    <span class="protocol-intro-tag">§3 COMPANION · DRAFTED v0.1</span>
+    <span class="protocol-intro-tag">COMPANION TO §3 · DRAFTED v0.1</span>
     <h3 class="protocol-intro-title">Capability = interface, not implementation</h3>
   </div>
   <p class="protocol-intro-body">Each IRI in §3's capability vocab (<code>mind:SpeechToText</code>, <code>mind:LocalLLM</code>, <code>mind:OCR</code>, …) names a request/response shape that every service offering that capability must implement. Two providers of <code>mind:SpeechToText</code> are interchangeable — same multipart body, same JSON response, same error model.</p>
   <div class="protocol-intro-key">
     <div class="key-item"><span class="key-label">KEY IDEA</span><span class="key-value">Shared HTTP+JSON conventions across all capabilities. Async via <code>mind:ServiceCall</code> (§4).</span></div>
-    <div class="key-item"><span class="key-label">DEPENDS ON</span><span class="key-value"><a href="03-services-manifest.md">§3 Services manifest</a> · <a href="04-ldn-inbox-outbox.md">§4 LDN</a> (async)</span></div>
+    <div class="key-item"><span class="key-label">COMPANION TO</span><span class="key-value"><a href="03-services-manifest.md">§3 Services manifest</a> · uses <a href="04-ldn-inbox-outbox.md">§4 LDN</a> for async results</span></div>
     <div class="key-item"><span class="key-label">11 CAPABILITIES</span><span class="key-value">SpeechToText · TextToSpeech · LocalLLM · HostedLLM · Transcription · OCR · Translation · PrivacyClassification · ImageClassification · Embedding · Summarization</span></div>
   </div>
 </div>
-
-> Status: drafted v0.1. Anchored to [§3](03-services-manifest.md). Depends on [§1](01-pod-layout.md) and [§4](04-ldn-inbox-outbox.md) (for async results).
 
 ---
 

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mind mark — reusable CSS-only animation</title>
+<style>
+  :root{ --accent-bright:#67e8f9; --mono:ui-monospace,"JetBrains Mono","SF Mono",Menlo,Consolas,monospace; }
+  html,body{height:100%;margin:0}
+  body{
+    background:linear-gradient(180deg,#0b0d12,#07080b);
+    display:flex;align-items:center;justify-content:center;font-family:var(--mono);
+  }
+  .wrap{width:min(880px,92vw)}
+
+  /* ===== .mind-mark — the reusable, CSS-only animation =====================
+     Markup: <div class="mind-mark"><div class="ln"> …per-letter spans… </div></div>
+     Each capital span carries style="--dx:<n>ch" (its travel to the MIND slot).
+     No JavaScript needed — the animation runs as soon as the element renders. */
+  .mind-mark{
+    --hold:1.9s;            /* how long the sentence shows before collapsing */
+    --move:1.05s;          /* duration of the fly-together */
+    --scale:2.55;          /* how large the surviving letters grow */
+    display:flex;align-items:center;justify-content:center;min-height:5.5em;
+    border:1px solid #1e2939;border-radius:12px;overflow:hidden;
+    background:
+      radial-gradient(ellipse 90% 70% at 50% 45%, rgba(34,211,238,.08) 0, transparent 60%),
+      linear-gradient(180deg,#0b0d12,#07080b);
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
+    font-family:var(--mono);
+  }
+  .mind-mark .ln{ white-space:nowrap;font-size:clamp(20px,3.6vw,46px);line-height:1;font-weight:600; }
+  .mind-mark .ch{ display:inline-block;width:1ch;text-align:center; }
+  .mind-mark .ch .g{ display:inline-block;color:#7d8694;will-change:transform,opacity; }
+  /* the four initials are in the primary color from the very first frame */
+  .mind-mark .c .g{ color:var(--accent-bright);text-shadow:0 0 .5em rgba(34,211,238,.35); }
+
+  .mind-mark .c{ animation:mmMove var(--move) cubic-bezier(.6,0,.2,1) var(--hold) both; }
+  .mind-mark .c .g{ animation:mmGrow var(--move) cubic-bezier(.6,0,.2,1) var(--hold) both; }
+  .mind-mark .l .g{ animation:mmFade .55s ease var(--hold) both; }
+
+  @keyframes mmMove{ to{ transform:translateX(var(--dx)); } }
+  @keyframes mmGrow{ to{ transform:scale(var(--scale));
+    text-shadow:0 0 .8em rgba(34,211,238,.65),0 0 1.6em rgba(34,211,238,.32); } }
+  @keyframes mmFade{ to{ opacity:0;transform:scale(.18) translateY(.1em); } }
+
+  @media (prefers-reduced-motion: reduce){
+    .mind-mark .c,.mind-mark .c .g,.mind-mark .l .g{ animation:none; }
+    .mind-mark .l .g{ opacity:0; }
+    .mind-mark .c{ transform:translateX(var(--dx)); }
+    .mind-mark .c .g{ transform:scale(var(--scale)); }
+  }
+  /* ======================================================================== */
+
+  .replay{
+    display:block;margin:22px auto 0;font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;background:rgba(15,23,42,.7);color:#cbd5e1;
+    border:1px solid rgba(71,85,105,.6);padding:7px 14px;border-radius:4px;cursor:pointer;
+  }
+  .replay:hover{border-color:var(--accent-bright);color:var(--accent-bright)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div id="host"><div class="mind-mark"><div class="ln"><span class="ch c" style="--dx:20ch"><span class="g">D</span></span><span class="ch l"><span class="g">e</span></span><span class="ch l"><span class="g">c</span></span><span class="ch l"><span class="g">e</span></span><span class="ch l"><span class="g">n</span></span><span class="ch l"><span class="g">t</span></span><span class="ch l"><span class="g">r</span></span><span class="ch l"><span class="g">a</span></span><span class="ch l"><span class="g">l</span></span><span class="ch l"><span class="g">i</span></span><span class="ch l"><span class="g">z</span></span><span class="ch l"><span class="g">e</span></span><span class="ch l"><span class="g">d</span></span><span class="ch l"><span class="g">&nbsp;</span></span><span class="ch c" style="--dx:2ch"><span class="g">N</span></span><span class="ch l"><span class="g">e</span></span><span class="ch l"><span class="g">t</span></span><span class="ch l"><span class="g">w</span></span><span class="ch l"><span class="g">o</span></span><span class="ch l"><span class="g">r</span></span><span class="ch l"><span class="g">k</span></span><span class="ch l"><span class="g">&nbsp;</span></span><span class="ch c" style="--dx:-10ch"><span class="g">I</span></span><span class="ch l"><span class="g">n</span></span><span class="ch l"><span class="g">&nbsp;</span></span><span class="ch c" style="--dx:-17ch"><span class="g">M</span></span><span class="ch l"><span class="g">i</span></span><span class="ch l"><span class="g">n</span></span><span class="ch l"><span class="g">d</span></span></div></div></div>
+    <button class="replay" onclick="const h=document.getElementById('host');h.innerHTML=h.innerHTML">▶ Replay</button>
+  </div>
+</body>
+</html>

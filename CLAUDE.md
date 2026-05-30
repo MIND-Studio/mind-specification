@@ -13,20 +13,47 @@ This is **distinct from `mind-cube-product/`** (described in the parent `/Users/
 ```
 architecture/
 ├── README.md, CLAUDE.md             project meta
-├── build.py, styles.css             build script + shared CSS
-├── index.html, apps.html            entry-point viewers
-├── protocol-01.html ... 04.html     protocol section viewers
-└── src/                             all markdown source
-    ├── architecture.md
-    ├── apps.md
-    └── protocol/
-        ├── 01-pod-layout.md
-        ├── 02-agent-control.md
-        ├── 03-services-manifest.md
-        └── 04-ldn-inbox-outbox.md
+├── build.py                         build script (reads src/, writes site/)
+├── src/                             all markdown source
+│   ├── architecture.md
+│   ├── apps.md
+│   ├── roadmap.md
+│   ├── workers.md
+│   └── protocol/
+│       ├── 01-pod-layout.md
+│       ├── 02-agent-control.md
+│       ├── 03-services-manifest.md
+│       ├── capabilities.md          companion to §3 (not a numbered section)
+│       └── 04-ldn-inbox-outbox.md
+├── site/                            published site (the GitHub Pages artifact)
+│   ├── styles.css                   shared CSS
+│   ├── index.html                   entry-point viewer
+│   ├── apps.html, roadmap.html, workers.html
+│   ├── protocol-01.html … 04.html   protocol section viewers
+│   └── capabilities.html
+└── slides/                          Slidev decks (pitch + technical) — separate toolchain
+    ├── pitch.md, technical.md       deck entry files
+    ├── shared/                      slide-shaped partials imported by both decks
+    └── components/, layouts/, styles/   ported Mind brand theme
 ```
 
-**Rule:** markdown lives in `src/`, HTML viewers live at root. The two layouts are linked by the `PAIRS` list in `build.py`.
+**Rule:** markdown lives in `src/`, the rendered HTML viewers + `styles.css` live in `site/` (which is what GitHub Pages publishes). The `src/` → `site/` pairing is the `PAIRS` list in `build.py`.
+
+## Slides (`slides/`)
+
+A standalone [Slidev](https://sli.dev) project — **not** part of the `build.py` / `src/` → `site/` flow. Two decks (`pitch.md`, `technical.md`) built on a ported Mind brand theme. They `src:`-import shared partials from `slides/shared/`; the three signature visuals (`LayerStack`, `DataShift`, `RoadmapLadder`) are Vue components in `slides/components/` that reproduce the corresponding `diagram-*` blocks from `site/styles.css`.
+
+- **Source relationship:** decks are distilled *by hand* from `src/*.md` (each partial cites its source section). They are not auto-synced — if the spec changes materially, update the relevant partial/slide too.
+
+### Single source for brand visuals — `shared/brand.css`
+
+Reusable visual blocks (currently the `.mind-mark` animated wordmark) live in **`shared/brand.css`** — one definition, two consumers:
+
+- **Site:** `build.py` injects `shared/brand.css` into `site/styles.css` between the `BUILD:BRAND` markers (same idea as the markdown inlining). Never hand-edit between those markers.
+- **Slides:** `slides/styles/index.css` does `@import '../../shared/brand.css'` (Vite; `slides/vite.config.ts` allows reading the parent dir). The Vue wrappers (e.g. `MindMark.vue`) build the markup but carry **no styles** — they rely on the shared classes.
+
+Edit the visual in `shared/brand.css`, run `python3 build.py`, and both the site and the decks update. **Gotchas:** keep it class-scoped and self-contained (literal colors, no host variables); and **no nested `/* */`** inside comments — the raw site load breaks on them (Vite tolerates it, the browser doesn't). To migrate another diagram to single-source, move its CSS into `shared/brand.css`, use identical class-based markup in both the site `.md` and the slide (drop the Vue scoped `<style>`).
+- **Workflow:** `cd slides && npm run dev:pitch` (or `dev:tech`) to present; `npm run build` emits into `site/slides/{pitch,technical}/` (gitignored; regenerated in CI). CI builds both decks into the Pages artifact.
 
 ## Editing workflow
 
@@ -49,16 +76,16 @@ In markdown, link to other docs using `.md` paths (`protocol/01-pod-layout.md`, 
 1. Markdown viewers (GitHub, VS Code preview) resolve `.md` paths natively.
 2. The HTML viewer script **rewrites** `.md` links to their HTML viewer (`protocol/01-pod-layout.md` → `protocol-01.html`, `apps.md` → `apps.html`, `architecture.md` → `index.html`) at render time. So both worlds work.
 
-The rewriter handles leading `./` or `../` automatically (since the viewer always lives at root). If you add a new top-level page, extend the `if/else if` block in the viewer JS so it gets rewritten too.
+The rewriter handles leading `./` or `../` automatically, and emits relative sibling links (`protocol-01.html`) — all viewers sit together in `site/`, so cross-doc links resolve. If you add a new top-level page, extend the `if/else if` block in the viewer JS so it gets rewritten too.
 
 ## Adding a new protocol section
 
 To add a hypothetical §5:
 
 1. Create `src/protocol/05-your-section.md`.
-2. Copy `protocol-04.html` → `protocol-05.html`. Adjust `<title>`, move `aria-current="page"` to the §5 link, update the fallback error message.
-3. Add `<a href="protocol-05.html">§5 your-section</a>` to the top `<nav>` in **every** viewer (there's no shared layout).
-4. Add `("src/protocol/05-your-section.md", "protocol-05.html")` to `PAIRS` in `build.py`.
+2. Copy `site/protocol-04.html` → `site/protocol-05.html`. Adjust `<title>`, move `aria-current="page"` to the §5 link, update the fallback error message.
+3. Add `<a href="protocol-05.html">§5 your-section</a>` to the top `<nav>` in **every** viewer in `site/` (there's no shared layout).
+4. Add `("src/protocol/05-your-section.md", "site/protocol-05.html")` to `PAIRS` in `build.py`.
 5. Run `python3 build.py`.
 
 ## Adding a new top-level page (apps-style)
@@ -66,9 +93,9 @@ To add a hypothetical §5:
 To add a hypothetical workers page:
 
 1. Create `src/workers.md`.
-2. Copy `apps.html` → `workers.html`. Adjust `<title>`, move `aria-current="page"` to the workers link, update the fallback error message.
-3. Add `<a href="workers.html">Workers</a>` to the nav in every viewer.
-4. Add `("src/workers.md", "workers.html")` to `PAIRS` in `build.py`.
+2. Copy `site/apps.html` → `site/workers.html`. Adjust `<title>`, move `aria-current="page"` to the workers link, update the fallback error message.
+3. Add `<a href="workers.html">Workers</a>` to the nav in every viewer in `site/`.
+4. Add `("src/workers.md", "site/workers.html")` to `PAIRS` in `build.py`.
 5. Extend the `.md → .html` rewrite block in the viewer JS so `workers.md` maps to `workers.html` (otherwise cross-doc clicks to it stay as raw markdown).
 6. Run `python3 build.py`.
 
@@ -77,14 +104,14 @@ To add a hypothetical workers page:
 `build.py` only checks markers exist; it doesn't validate the rendered output. To actually see Mermaid diagrams, custom HTML/CSS panels, tables, and link resolution:
 
 ```bash
-open index.html        # or any other viewer
+open site/index.html   # or any other viewer in site/
 ```
 
 Append `?theme=dark` or `?theme=light` to override the OS theme preference — useful when checking both palettes. (Many primer/C4 graphics are intentionally cinematic dark in both modes.)
 
 ## Visual design system
 
-The doc uses a custom design system (in `styles.css`) centered on:
+The doc uses a custom design system (in `site/styles.css`) centered on:
 
 - **Cyan accent** (`#22d3ee` / `#67e8f9`) on canonical / important elements only
 - **Dark cinematic panels** for primer / explainer graphics (`#0b0d12` → `#07080b` gradient)
@@ -92,7 +119,7 @@ The doc uses a custom design system (in `styles.css`) centered on:
 - **Letter-spaced uppercase** for short labels (layer names, tags) — never for body text
 - **Subtle drop-shadows + dot-grid backdrops** for depth without noise
 
-When adding new diagrams, prefer **inline HTML in markdown + CSS in styles.css** over inline SVG or Mermaid, unless the diagram is genuinely flowchart-shaped and Mermaid output looks good. The user's strong preference is for custom HTML/CSS for design control.
+When adding new diagrams, prefer **inline HTML in markdown + CSS in `site/styles.css`** over inline SVG or Mermaid, unless the diagram is genuinely flowchart-shaped and Mermaid output looks good. The user's strong preference is for custom HTML/CSS for design control.
 
 ## Status of the spec (as of 2026-05-25)
 

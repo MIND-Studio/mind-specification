@@ -11,7 +11,7 @@ How **external services** — a Mind Cube appliance on your LAN, a hosted transc
   <div class="protocol-intro-key">
     <div class="key-item"><span class="key-label">KEY IDEA</span><span class="key-value">Two-tier discovery: profile pointer → manifest → service endpoint.</span></div>
     <div class="key-item"><span class="key-label">DEPENDS ON</span><span class="key-value"><a href="01-pod-layout.md">§1</a> (paths) · Solid (profile)</span></div>
-    <div class="key-item"><span class="key-label">COMPANION</span><span class="key-value"><a href="capabilities.md">§3 capabilities</a> — interface contracts</span></div>
+    <div class="key-item"><span class="key-label">COMPANION</span><span class="key-value"><a href="capabilities.md">Capabilities reference</a> — interface contracts</span></div>
   </div>
 </div>
 
@@ -50,13 +50,11 @@ How **external services** — a Mind Cube appliance on your LAN, a hosted transc
       <span class="discovery-num">05</span>
       <div class="discovery-body">
         <div class="discovery-head">Call</div>
-        <div class="discovery-detail">POST to the service's <code>mind:endpoint</code> per the capability's interface contract (see <a href="capabilities.md">§3 capabilities</a>). Sync response, or async via <a href="04-ldn-inbox-outbox.md">§4 <code>mind:ServiceCall</code></a></div>
+        <div class="discovery-detail">POST to the service's <code>mind:endpoint</code> per the capability's interface contract (see <a href="capabilities.md">Capabilities reference</a>). Sync response, or async via <a href="04-ldn-inbox-outbox.md">§4 <code>mind:ServiceCall</code></a></div>
       </div>
     </li>
   </ol>
 </div>
-
-> Status: drafted v0.1. Anchored to [README →](../README.md). Depends on [§1](01-pod-layout.md).
 
 ---
 

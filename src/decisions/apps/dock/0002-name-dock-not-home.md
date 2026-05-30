@@ -25,20 +25,16 @@ one thing is two names for one concept.
 2. **Rename to "Dock"** *(chosen)* — adopt the spec's shell name everywhere.
    - Pros: one canonical name; evocative single capitalized word (Mind naming
      convention); aligns prototype ↔ spec; distinguishes the launcher from a generic page.
-   - Cons: the prototype directory is still `mind-home-v0` (rename is a follow-up); some
-     existing docs/notes still say "Home".
+   - Cons: none material to the spec.
 
 ## Decision
 
-The pod front-door app is **Dock**. Decision records for it use `scope: app:dock`. The
-`mind-home-v0` prototype is Dock's reference implementation; its profile editor and
-account management are part of Dock in this implementation (broader than the minimal
-launcher concept in the spec).
+The pod front-door app is **Dock**. Decision records for it use `scope: app:dock`. Dock
+is the launcher shell, and in this family it also carries the profile editor and account
+management (broader than the minimal launcher concept in the spec).
 
 ## Consequences
 
 - Positive: one name across spec, records, and product; on-brand.
-- Costs: a follow-up rename of the `mind-home-v0` directory and lingering "Home"
-  references in docs/memory.
-- Follow-ups: rename the prototype dir; update `apps.md`'s Dock section to note it also
-  covers profile + account; carry the launcher registry at `/apps/dock/`.
+- Follow-ups: update `apps.md`'s Dock section to note it also covers profile + account;
+  carry the launcher registry at `/apps/dock/`.

@@ -1,0 +1,57 @@
+/* ============================================================
+   shared/brand.css — SINGLE SOURCE for the Mind reusable visual blocks.
+
+   This file is the one definition of the brand animated/diagram
+   components. Both consumers pull from it:
+
+     • Site   — build.py injects this file into site/styles.css
+                between the BUILD:BRAND markers.
+     • Slides — slides/styles/index.css @imports it (Vite).
+
+   Edit the visuals HERE, run `python3 build.py`, and both the
+   published site and the Slidev decks pick up the change.
+   Keep everything class-scoped and self-contained (literal colors,
+   no dependency on host stylesheet variables) so it renders
+   identically in both toolchains.
+   ============================================================ */
+
+/* ---- .mind-mark — animated wordmark -------------------------------
+   "Decentralized Network In Mind" → the four cyan initials fly
+   straight into MIND. CSS-only (runs on render); cinematic dark panel.
+   Markup: <div class="mind-mark"><div class="ln"> …spans… </div></div>
+   each capital span carrying style="--dx:<n>ch".
+   ------------------------------------------------------------------- */
+.mind-mark{
+  --hold:1.9s;            /* how long the sentence shows before collapsing */
+  --move:1.05s;          /* duration of the fly-together */
+  --scale:2.55;          /* how large the surviving letters grow */
+  display:flex;align-items:center;justify-content:center;min-height:5.5em;
+  font-family:ui-monospace,"JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
+}
+/* add `.panel` for the boxed, cinematic dark-panel treatment (site hero);
+   omit it to let the wordmark glow straight on the background (deck cover). */
+.mind-mark.panel{
+  margin:16px 0 32px;
+  border:1px solid #1e2939;border-radius:12px;overflow:hidden;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 45%, rgba(34,211,238,.08) 0, transparent 60%),
+    linear-gradient(180deg,#0b0d12,#07080b);
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
+}
+.mind-mark .ln{ white-space:nowrap;font-size:clamp(20px,3.6vw,46px);line-height:1;font-weight:600; }
+.mind-mark .ch{ display:inline-block;width:1ch;text-align:center; }
+.mind-mark .ch .g{ display:inline-block;color:#7d8694;will-change:transform,opacity; }
+.mind-mark .c .g{ color:#67e8f9;text-shadow:0 0 .5em rgba(34,211,238,.35); }
+.mind-mark .c{ animation:mmMove var(--move) cubic-bezier(.6,0,.2,1) var(--hold) both; }
+.mind-mark .c .g{ animation:mmGrow var(--move) cubic-bezier(.6,0,.2,1) var(--hold) both; }
+.mind-mark .l .g{ animation:mmFade .55s ease var(--hold) both; }
+@keyframes mmMove{ to{ transform:translateX(var(--dx)); } }
+@keyframes mmGrow{ to{ transform:scale(var(--scale));
+  text-shadow:0 0 .8em rgba(34,211,238,.65),0 0 1.6em rgba(34,211,238,.32); } }
+@keyframes mmFade{ to{ opacity:0;transform:scale(.18) translateY(.1em); } }
+@media print, (prefers-reduced-motion: reduce){
+  .mind-mark .c,.mind-mark .c .g,.mind-mark .l .g{ animation:none; }
+  .mind-mark .l .g{ opacity:0; }
+  .mind-mark .c{ transform:translateX(var(--dx)); }
+  .mind-mark .c .g{ transform:scale(var(--scale)); }
+}

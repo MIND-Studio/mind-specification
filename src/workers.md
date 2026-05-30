@@ -99,11 +99,11 @@ An **indexer** is the missing database layer. It subscribes to pod changes, buil
 
 **Why it matters**
 
-Without an indexer, every app that wants "all my notes tagged X" has to walk the pod itself. Apps would be slow, the pod would be hammered, and federated views (your social feed across many friends' pods) would be infeasible. The indexer makes the pod-as-canonical-store practical at scale.
+Without an indexer, every app that wants "all my notes tagged X" has to walk the pod itself. Apps would be slow, the pod would be hammered, and federated views (your social feed across many friends' pods) would be infeasible. The indexer makes the pod-as-source-of-truth practical at scale.
 
 **Replaceable**
 
-Your indexer is a vendor choice, not a lock-in. Today it might be a Node.js process running a SQLite store; tomorrow it could be PostgreSQL, Solr, Pinecone, or a custom Rust binary. Swap it out — the apps don't care, because they speak a small query API rather than the indexer's internals. The indexer can be rebuilt from the pod at any time (it holds no canonical state).
+Your indexer is a vendor choice, not a lock-in. Today it might be a Node.js process running a SQLite store; tomorrow it could be PostgreSQL, Solr, Pinecone, or a custom Rust binary. Swap it out — the apps don't care, because they speak a small query API rather than the indexer's internals. The indexer can be rebuilt from the pod at any time — nothing it stores is the source of truth, just a cached view.
 
 **Related parts of Mind**
 
@@ -146,7 +146,7 @@ Bridges make migration painless. You don't have to abandon mature tools; you jus
 
 **Stateless and replaceable**
 
-A well-built bridge holds no canonical state — it's a pure translator. If the bridge process dies, you restart it; nothing is lost because the canonical data is in your pod (or in the foreign system, which the bridge re-mirrors on next run).
+A well-built bridge is a pure translator — it stores nothing that's the source of truth. If the bridge process dies, you restart it; nothing is lost because the real data is in your pod (or in the foreign system, which the bridge re-mirrors on next run).
 
 **Related parts of Mind**
 
@@ -223,4 +223,4 @@ The protocol is open. To add a new worker type:
    - If your worker calls external services: [§3 Services manifest](protocol/03-services-manifest.md)
    - If your worker sends or receives cross-pod messages: [§4 LDN inbox + outbox](protocol/04-ldn-inbox-outbox.md)
 
-That's it. A worker is just a process with credentials. The interesting design decisions are **scope** (least privilege, expressed in `hand.ttl`) and **replaceability** (does the worker hold any canonical state outside the pod? if yes, can it rebuild that state from the pod?).
+That's it. A worker is just a process with credentials. The interesting design decisions are **scope** (least privilege, expressed in `hand.ttl`) and **replaceability** (does the worker store anything outside the pod that's the source of truth? if yes, can it rebuild that state from the pod?).

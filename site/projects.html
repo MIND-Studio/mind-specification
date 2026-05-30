@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mind — Projects</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/marked@15.0.0/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <a class="brand" href="index.html">Mind<span class="brand-sub">/ architecture</span></a>
+    <nav>
+      <a href="index.html">Overview</a>
+      <a href="apps.html">Apps</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="roadmap.html">Roadmap</a>
+      <a href="workers.html">Workers</a>
+      <a href="protocol-01.html">§1 layout</a>
+      <a href="protocol-02.html">§2 control</a>
+      <a href="protocol-03.html">§3 services</a>
+      <a href="capabilities.html">Capabilities</a>
+      <a href="protocol-04.html">§4 LDN</a>
+      <a href="decisions.html">Decisions</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article id="content" class="md-content">
+    <p class="md-loading">Rendering…</p>
+  </article>
+</main>
+
+<!-- BUILD:MD-START -->
+<script type="text/markdown-base64" id="md-source">
+IyBQcm9qZWN0cwoKQSAqKlByb2plY3QqKiBpcyBhIGJvdW5kZWQgcGllY2Ugb2Ygd29yayDigJQgc29tZXRoaW5nIHdpdGggYSAqKnN0YXJ0KiogYW5kLCB1c3VhbGx5LCBhbiAqKmVuZCoqLiAiUmVsYXVuY2ggdGhlIHdlYnNpdGUuIiAiUGxhbiB0aGUgdHJpcC4iICJXcml0ZSB0aGUgYm9vay4iIFlvdSBvcGVuIGl0LCB5b3Ugd29yayBvbiBpdCwgeW91IGZpbmlzaCBpdCwgeW91IGFyY2hpdmUgaXQuCgpBIFByb2plY3QgZG9lcyAqKm5vdCoqIGhvbGQgeW91ciBmaWxlcyBpdHNlbGYuIEl0ICoqcG9pbnRzIGF0KiogdGhlIHRoaW5ncyB0aGUgd29yayB0b3VjaGVzOgoKLSBvbmUgb3IgbW9yZSAqKkNvZGVzcGFjZXMqKiAocmVwb3MgLyBzaXRlcykKLSAqKkRvY3MqKiBwYWdlcwotICoqRHJpdmUqKiBmb2xkZXJzCi0gKipUYXNrcyoqIGxpc3RzCi0gdGhlICoqcGVvcGxlKiogd29ya2luZyBvbiBpdAoKVGhpbmsgb2YgYSBQcm9qZWN0IGFzIGEgZm9sZGVyIG9mICpsaW5rcyosIG5vdCBhIGZvbGRlciBvZiAqZmlsZXMqLiBUaGUgcmVhbCBzdHVmZiBzdGF5cyB3aGVyZSBpdCBhbHJlYWR5IGxpdmVzIGluIHlvdXIgcG9kOyB0aGUgUHJvamVjdCBqdXN0IGdhdGhlcnMgcmVmZXJlbmNlcyB0byBpdC4KCldoZXJlIGl0IGxpdmVzOiBhIHNoYXJlZCBgL3Byb2plY3RzL2Agc3BhY2UgaW4geW91ciBwb2QsIG9uZSBkb2N1bWVudCBwZXIgcHJvamVjdCDigJQgc28gb3RoZXIgYXBwcyAobGlrZSBGbG93KSBhbmQgeW91ciBhZ2VudHMgY2FuIHJlYWQgaXQgd2l0aG91dCBleHRyYSBzaGFyaW5nIHN0ZXBzLgoKIyMgQSBQcm9qZWN0IGNhbiBoYXZlIG1hbnkgQ29kZXNwYWNlcwoKQSByZWFsIHByb2plY3Qgb2Z0ZW4gc3BhbnMgc2V2ZXJhbCByZXBvcyDigJQgYSB3ZWJzaXRlLCBhIGJsb2csIHNvbWUgaW5mcmFzdHJ1Y3R1cmUg4oCUIHBsdXMgbm9uLWNvZGUgdGhpbmdzIGxpa2UgYSBicmllZiBhbmQgYSB0YXNrIGxpc3QuIFNvIG9uZSBQcm9qZWN0IGNhbiByZWZlcmVuY2UgKiptYW55KiogQ29kZXNwYWNlcywgYW5kIGEgQ29kZXNwYWNlIGNhbiBiZSB1c2VkIGJ5ICoqbW9yZSB0aGFuIG9uZSoqIFByb2plY3QuIEJlY2F1c2UgdGhlIFByb2plY3Qgb25seSBsaW5rcyB0byB0aGVtLCBub3RoaW5nIGhhcyB0byBtb3ZlIHdoZW4gd29yayBpcyByZW9yZ2FuaXplZC4KCiMjIFByb2plY3QgdnMuIENvZGVzcGFjZSDigJQgdGhlIGtleSBkaWZmZXJlbmNlCgp8IHwgKipQcm9qZWN0KiogfCAqKkNvZGVzcGFjZSoqIHwKfC0tLXwtLS18LS0tfAp8IExpZmVzcGFuIHwgSGFzIGEgc3RhcnQgYW5kIGFuIGVuZCB8IExpdmVzIG9uIGluZGVmaW5pdGVseSB8CnwgTmF0dXJlIHwgQW4gKmluaXRpYXRpdmUqIHlvdSBwdXJzdWUgfCBBbiAqYXNzZXQqIHlvdSBrZWVwIHwKfCBTdGF0ZSB8IGFjdGl2ZSDihpIgZG9uZSDihpIgYXJjaGl2ZWQgfCBtYWludGFpbmVkIG9yIGRvcm1hbnQg4oCUIG5ldmVyICJmaW5pc2hlZCIgfAp8IFdoZW4gYSBwcm9qZWN0IGVuZHMgfCBpdCBhcmNoaXZlczsgaXRzIGxpbmtzIHN0YXkgYXMgaGlzdG9yeSB8IHVuYWZmZWN0ZWQg4oCUIGl0IG91dGxpdmVzIHRoZSBwcm9qZWN0IHwKClRoaXMgaXMgKndoeSogYSBQcm9qZWN0IG11c3Qgb25seSAqKmxpbmsqKiB0byBpdHMgQ29kZXNwYWNlcywgbmV2ZXIgb3duIHRoZW06IHdoZW4gdGhlIHByb2plY3QgZW5kcywgdGhlIHJlcG9zIGFuZCBkb2NzIHN0YXkgaW4geW91ciBwb2QgYW5kIGNhbiBiZSBwaWNrZWQgdXAgYnkgdGhlIG5leHQgcHJvamVjdC4KCi0tLQoKIyMgV2h5IHdlIGRvbid0IGhhdmUgYSAiV29ya3NwYWNlIgoKIldvcmtzcGFjZSIgc291bmRzIHVzZWZ1bCwgYnV0IGV2ZXJ5IHRpbWUgd2UgdHJpZWQgdG8gcGluIGl0IG9uIHNvbWV0aGluZywgYSBjbGVhcmVyIHdvcmQgYWxyZWFkeSBkaWQgdGhlIGpvYjoKCi0gKipUaGUgZnJvbnQgZG9vcioqIOKAlCB3aGVyZSB5b3Ugc2lnbiBpbiwgbGF1bmNoIGFwcHMsIGVkaXQgeW91ciBwcm9maWxlLCBtYW5hZ2UgeW91ciBhY2NvdW50IOKAlCBpcyAqKkhvbWUqKi4KLSAqKkEgcGxhY2UgdG8gd3JpdGUgbm90ZXMgYW5kIHBhZ2VzKiogaXMgKipEb2NzKiouCi0gKipBIGJvdW5kZWQgcGllY2Ugb2Ygd29yayoqIGlzIGEgKipQcm9qZWN0KiouCi0gKipUaGUgbG9uZy1saXZlZCBwbGFjZSB0aGF0IGhvbGRzIGV2ZXJ5dGhpbmcgeW91IG93bioqIGlzIHlvdXIgKipQb2QqKi4gKE5lZWQgdG8gc2VwYXJhdGUgd29yayBmcm9tIHBlcnNvbmFsIGxpZmU/IFlvdSBtYWtlIGEgc2Vjb25kIHBvZCDigJQgbm90IGEgc2Vjb25kICJ3b3Jrc3BhY2UiLikKClNvICJ3b3Jrc3BhY2UiIGhhcyBubyBqb2IgbGVmdCB0aGF0IGlzbid0IGFscmVhZHkgY292ZXJlZDoKCi0gVGhlIHRoaW5nIHlvdSAqd29yayBpbiog4oaSIHRoYXQncyBhICoqUHJvamVjdCoqLgotIFRoZSBsYXN0aW5nIHNwYWNlIHRoYXQgKmhvbGRzIG1hbnkgcHJvamVjdHMqIOKGkiB0aGF0J3MgeW91ciAqKlBvZCoqLgoKQWRkaW5nICJXb3Jrc3BhY2UiIG9uIHRvcCB3b3VsZCBqdXN0IGJlIGEgdGhpcmQgd29yZCBjb21wZXRpbmcgd2l0aCAqKlBvZCoqIGFuZCAqKlByb2plY3QqKiwgYW5kIHdlJ2Qgc3BlbmQgZm9yZXZlciBleHBsYWluaW5nIHRoZSBkaWZmZXJlbmNlLiBTbyB3ZSBsZWF2ZSBpdCBvdXQuCgoqKk9uZSBleGNlcHRpb24sIGZvciBsYXRlcjoqKiBpZiBwZW9wbGUgZXZlciB3YW50IHNlcGFyYXRlIGFyZWFzICppbnNpZGUgYSBzaW5nbGUgcG9kKiDigJQgYSAiV29yayIgc2lkZSBhbmQgYSAiUGVyc29uYWwiIHNpZGUsIGVhY2ggd2l0aCBpdHMgb3duIHByb2plY3RzIGFuZCBtZW1iZXJzIOKAlCAiV29ya3NwYWNlIiB3b3VsZCBiZSB0aGUgcmlnaHQgbmFtZSBmb3IgdGhhdC4gV2UncmUga2VlcGluZyB0aGUgd29yZCBvbiB0aGUgc2hlbGYgZm9yIHRoYXQgY2FzZSBvbmx5LCBhbmQgbm90IHVzaW5nIGl0IGJlZm9yZSB0aGVuLgo=
+</script>
+<!-- BUILD:MD-END -->
+
+<script>
+(function () {
+  const themeOverride = new URLSearchParams(location.search).get('theme');
+  if (themeOverride === 'dark') document.documentElement.classList.add('dark');
+  if (themeOverride === 'light') document.documentElement.classList.remove('dark');
+  const isDark = themeOverride === 'dark'
+                 || (themeOverride !== 'light'
+                     && (window.matchMedia('(prefers-color-scheme: dark)').matches
+                         || document.documentElement.classList.contains('dark')));
+
+  const themeVariables = isDark ? {
+    background:           '#111114',
+    primaryColor:         '#1e293b',
+    primaryTextColor:     '#e2e8f0',
+    primaryBorderColor:   '#475569',
+    secondaryColor:       '#0c2942',
+    tertiaryColor:        '#0a2329',
+    lineColor:            '#94a3b8',
+    textColor:            '#e2e8f0',
+    mainBkg:              '#1e293b',
+    clusterBkg:           'transparent',
+    clusterBorder:        '#475569',
+    edgeLabelBackground:  '#111114',
+    fontFamily:           'ui-monospace, "JetBrains Mono", Menlo, monospace',
+    fontSize:             '13px'
+  } : {
+    background:           '#ffffff',
+    primaryColor:         '#1e293b',
+    primaryTextColor:     '#f8fafc',
+    primaryBorderColor:   '#0f172a',
+    secondaryColor:       '#0c2942',
+    tertiaryColor:        '#ecfeff',
+    lineColor:            '#475569',
+    textColor:            '#0f172a',
+    mainBkg:              '#1e293b',
+    clusterBkg:           'transparent',
+    clusterBorder:        '#cbd5e1',
+    edgeLabelBackground:  '#ffffff',
+    fontFamily:           'ui-monospace, "JetBrains Mono", Menlo, monospace',
+    fontSize:             '13px'
+  };
+
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    themeVariables,
+    securityLevel: 'loose',
+    flowchart: { htmlLabels: true, padding: 18, nodeSpacing: 28, rankSpacing: 36 }
+  });
+
+  marked.use({
+    renderer: {
+      code(token) {
+        if (token.lang === 'mermaid') {
+          return '<div class="mermaid">' + token.text + '</div>';
+        }
+        return false;
+      }
+    }
+  });
+
+  const el = document.getElementById('content');
+  const srcEl = document.getElementById('md-source');
+  const raw = srcEl ? srcEl.textContent.trim() : '';
+
+  if (!raw || raw === 'NEEDS_BUILD') {
+    el.innerHTML =
+      '<h1>Build not run yet</h1>' +
+      '<p>This HTML viewer needs the markdown inlined first. From the architecture directory, run:</p>' +
+      '<pre><code>python3 build.py</code></pre>' +
+      '<p>Then reload this page. Or just read the source directly: <a href="projects.md">projects.md</a>.</p>';
+    return;
+  }
+
+  try {
+    const bin   = atob(raw);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    const md    = new TextDecoder('utf-8').decode(bytes);
+    el.innerHTML = marked.parse(md);
+    // Slug-ify heading text into IDs so in-page anchor links (#apps, …) work.
+    el.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(h => {
+      if (!h.id) {
+        h.id = h.textContent.trim().toLowerCase()
+          .replace(/[^\w\s-]/g, '')
+          .replace(/\s+/g, '-');
+      }
+    });
+    // Rewrite cross-document .md links to their HTML viewers (HTML viewers live at root).
+    el.querySelectorAll('a[href]').forEach(a => {
+      const raw = a.getAttribute('href');
+      if (!raw || !raw.includes('.md')) return;
+      const hashIdx = raw.indexOf('#');
+      const hash = hashIdx >= 0 ? raw.substring(hashIdx) : '';
+      let path = hashIdx >= 0 ? raw.substring(0, hashIdx) : raw;
+      path = path.replace(/^(\.\/|(\.\.\/)+)/, '');     // strip leading ./ or ../
+      let target = null;
+      if      (path === 'architecture.md')                                                    target = 'index.html';
+      else if (path === 'projects.md')                                                            target = 'apps.html';
+      else if (path === 'roadmap.md')                                                         target = 'roadmap.html';
+      else if (path === 'workers.md')                                                         target = 'workers.html';
+      else if (path === 'capabilities.md' || path === 'protocol/capabilities.md' || path === 'src/protocol/capabilities.md') target = 'capabilities.html';
+      else {
+        const m = path.match(/^(?:src\/)?(?:protocol\/)?(\d+)-.*\.md$/);
+        if (m) target = 'protocol-' + m[1] + '.html';
+      }
+      if (target) a.setAttribute('href', target + hash);
+    });
+    // If the URL came in with a hash, scroll now that the IDs exist.
+    if (location.hash && location.hash.length > 1) {
+      const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if (target) target.scrollIntoView();
+    }
+    mermaid.run({ querySelector: '.mermaid' });
+  } catch (e) {
+    el.innerHTML = '<h1>Render error</h1><p><code>' + e.message + '</code></p>';
+  }
+})();
+</script>
+
+</body>
+</html>

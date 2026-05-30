@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mind — collapse animation experiment</title>
+<style>
+  :root{
+    --accent:#22d3ee; --accent-bright:#67e8f9;
+    --ink:#f5f5f5; --muted:#94a3b8;
+    --mono:ui-monospace,"JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    background:
+      radial-gradient(ellipse 90% 70% at 50% 42%, rgba(34,211,238,0.08) 0%, transparent 60%),
+      linear-gradient(180deg,#0b0d12 0%,#07080b 100%);
+    color:var(--ink); font-family:var(--mono);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .frame::before,.frame::after{content:"";position:fixed;width:34px;height:34px;border:1.5px solid rgba(34,211,238,0.45);pointer-events:none}
+  .frame::before{top:26px;left:26px;border-right:0;border-bottom:0}
+  .frame::after{bottom:26px;right:26px;border-left:0;border-top:0}
+
+  .scene{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+  .track{position:relative;height:120px}            /* JS sets width */
+  .cell{
+    position:absolute;top:0;text-align:center;
+    transition:transform 1.05s cubic-bezier(.6,0,.2,1);
+    will-change:transform;
+  }
+  .g{
+    display:inline-block;line-height:120px;font-weight:600;color:#7d8694;
+    transition:transform 1.05s cubic-bezier(.6,0,.2,1), opacity .55s ease, color .8s ease, text-shadow .8s ease;
+    will-change:transform,opacity;
+  }
+  /* the four initials are in the primary color from the very first frame */
+  .cap .g{
+    color:var(--accent-bright);
+    text-shadow:0 0 18px rgba(34,211,238,.35);
+  }
+
+  /* one motion: lowercase dissolves while the four capitals fly into MIND */
+  .scene.done .lc .g{opacity:0;transform:scale(.18) translateY(6px)}
+  .scene.done .cap .g{
+    color:var(--accent-bright);
+    text-shadow:0 0 30px rgba(34,211,238,.65),0 0 78px rgba(34,211,238,.32);
+  }
+
+  .no-trans .cell,.no-trans .g{transition:none!important}
+
+  .controls{position:fixed;bottom:34px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:5}
+  .controls button{
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    background:rgba(15,23,42,.7);color:#cbd5e1;border:1px solid rgba(71,85,105,.6);
+    padding:7px 13px;border-radius:4px;cursor:pointer;transition:.18s;
+  }
+  .controls button:hover{border-color:var(--accent);color:var(--accent-bright)}
+</style>
+</head>
+<body class="frame">
+  <div class="scene" id="scene">
+    <div class="track" id="track"></div>
+  </div>
+
+  <div class="controls">
+    <button id="replay">▶ Replay</button>
+    <button id="step">⇥ Toggle</button>
+  </div>
+
+<script>
+const PHRASE = "Decentralized Network In Mind";
+
+const track = document.getElementById('track');
+const scene = document.getElementById('scene');
+
+const FS = 38;                  // phrase font-size (px)
+const CELL = FS * 0.6;          // monospace cell width
+const GS = 96;                  // spacing between the 4 final letters
+const CAP_SCALE = 2.55;         // how big the surviving capitals grow
+
+// Each capital flies straight to its MIND slot — no intermediate "DNIM", no pause.
+const ORDER = { M:0, I:1, N:2, D:3 };
+
+let cells = [];
+const trackW = PHRASE.length * CELL;
+track.style.width = trackW + 'px';
+
+[...PHRASE].forEach((ch, idx) => {
+  if (ch === ' ') return;
+  const isCap = ch >= 'A' && ch <= 'Z';
+  const cell = document.createElement('span');
+  cell.className = 'cell ' + (isCap ? 'cap' : 'lc');
+  cell.style.left = (idx * CELL) + 'px';
+  cell.style.width = CELL + 'px';
+  const g = document.createElement('span');
+  g.className = 'g';
+  g.style.fontSize = FS + 'px';
+  g.textContent = ch;
+  cell.appendChild(g);
+  track.appendChild(cell);
+
+  cells.push({ ch, isCap, cell, g, naturalCenter: idx * CELL + CELL / 2 });
+});
+
+const slotCenter = (slot) => trackW / 2 + (slot - 1.5) * GS;
+
+function apply(done, instant) {
+  if (instant) scene.classList.add('no-trans');
+  scene.classList.toggle('done', done);
+
+  cells.forEach(c => {
+    let dx = 0, scale = 1;
+    if (c.isCap && done) {
+      dx = slotCenter(ORDER[c.ch]) - c.naturalCenter;   // straight to MIND position
+      scale = CAP_SCALE;
+    }
+    c.cell.style.transform = 'translateX(' + dx + 'px)';
+    c.g.style.transform = c.isCap ? 'scale(' + scale + ')' : '';
+  });
+
+  if (instant) { void track.offsetWidth; scene.classList.remove('no-trans'); }
+}
+
+let timer;
+function play() {
+  clearTimeout(timer);
+  apply(false, true);
+  timer = setTimeout(() => apply(true), 2000);   // hold the sentence, then one continuous move
+}
+
+let on = false;
+document.getElementById('step').onclick = () => { clearTimeout(timer); on = !on; apply(on, false); };
+document.getElementById('replay').onclick = () => { on = true; play(); };
+
+const qs = new URLSearchParams(location.search);
+if (qs.has('stage')) apply((+qs.get('stage') || 1) >= 2, true);
+else play();
+window.__apply = (d) => apply(!!d, true);
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "mind-slides",
+  "private": true,
+  "type": "module",
+  "description": "Slidev decks for Mind — a pitch deck and a technical architecture deck.",
+  "scripts": {
+    "dev:pitch": "slidev pitch.md --open",
+    "dev:tech": "slidev technical.md --open",
+    "build": "slidev build pitch.md --base /mind-specification/slides/pitch/ --out ../site/slides/pitch && slidev build technical.md --base /mind-specification/slides/technical/ --out ../site/slides/technical",
+    "export": "slidev export pitch.md --output pitch.pdf --wait 3200 && slidev export technical.md --output technical.pdf --wait 3200"
+  },
+  "dependencies": {
+    "@slidev/cli": "^51.0.0",
+    "@slidev/theme-default": "^0.25.0",
+    "@slidev/theme-seriph": "^0.25.0",
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.49.0"
+  }
+}
