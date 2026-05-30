@@ -1538,6 +1538,379 @@ a.chip:hover::after {
   color: rgba(252,211,77,0.85);
 }
 
+/* Protocol index — 4 cards summarizing §1-§4, used at the top of §1 */
+.diagram-block.diagram-protocol-index {
+  background: linear-gradient(180deg, rgba(11,13,18,0.98), rgba(7,8,11,0.98));
+  border: 1px solid rgba(34,211,238,0.18);
+  border-radius: var(--r-md);
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  color: #e2e8f0;
+}
+.proto-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px;
+  background: rgba(15,18,24,0.7);
+  border: 1px solid rgba(148,163,184,0.18);
+  border-radius: var(--r-sm);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 120ms, transform 120ms, background 120ms;
+  position: relative;
+}
+.md-content .proto-card { color: inherit; }
+.proto-card:hover {
+  border-color: rgba(34,211,238,0.55);
+  background: rgba(20,24,32,0.85);
+  transform: translateY(-1px);
+}
+.proto-card-current {
+  border-color: rgba(34,211,238,0.55);
+  background: linear-gradient(180deg, rgba(34,211,238,0.06), rgba(15,18,24,0.7));
+}
+.proto-card-num {
+  font-family: ui-monospace, "JetBrains Mono", Menlo, monospace;
+  font-size: 22px;
+  font-weight: 800;
+  color: #67e8f9;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.proto-card-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: -0.01em;
+}
+.proto-card-tag {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: rgba(203,213,225,0.78);
+  flex: 1;
+}
+.proto-card-meta {
+  font-family: ui-monospace, "JetBrains Mono", Menlo, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(148,163,184,0.85);
+  border-top: 1px dashed rgba(148,163,184,0.18);
+  padding-top: 8px;
+  margin-top: 2px;
+}
+.proto-card-current .proto-card-meta {
+  color: #67e8f9;
+  border-top-color: rgba(34,211,238,0.35);
+}
+.md-content .proto-card-meta a {
+  color: rgba(167,243,208,0.95);
+  text-decoration: underline;
+  text-decoration-color: rgba(167,243,208,0.4);
+}
+
+@media (max-width: 720px) {
+  .diagram-block.diagram-protocol-index { grid-template-columns: 1fr; }
+}
+
+/* Mission hero — TBL pull-quote + Mind's framing, opens the overview page */
+.diagram-block.diagram-hero {
+  background: linear-gradient(180deg, rgba(11,13,18,0.98), rgba(7,8,11,0.98));
+  background-image:
+    radial-gradient(rgba(34,211,238,0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(11,13,18,0.98), rgba(7,8,11,0.98));
+  background-size: 32px 32px, auto;
+  border: 1px solid rgba(34,211,238,0.22);
+  border-radius: var(--r-md);
+  padding: 44px 48px 38px;
+  color: #e2e8f0;
+  position: relative;
+  overflow: hidden;
+}
+.diagram-block.diagram-hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #22d3ee 25%, #67e8f9 50%, #22d3ee 75%, transparent);
+  opacity: 0.7;
+}
+.hero-pretitle {
+  font-family: ui-monospace, "JetBrains Mono", Menlo, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: #67e8f9;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+.md-content blockquote.hero-quote,
+.hero-quote {
+  font-size: 46px;
+  font-weight: 200;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: #f8fafc;
+  margin: 0 0 14px 0;
+  border-left: none;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+.hero-quote-mark {
+  color: rgba(34,211,238,0.55);
+  font-weight: 300;
+  margin: 0 2px;
+}
+.hero-attrib {
+  font-family: ui-monospace, "JetBrains Mono", Menlo, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: rgba(148,163,184,0.85);
+  margin-bottom: 30px;
+}
+.hero-body {
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: rgba(203,213,225,0.85);
+  margin: 0 0 14px;
+  max-width: 760px;
+}
+.hero-body:last-child { margin-bottom: 0; }
+.hero-body-strong { color: #e2e8f0; }
+.md-content .hero-body strong,
+.hero-body strong {
+  color: #67e8f9;
+  font-weight: 700;
+}
+.hero-body a {
+  color: #67e8f9;
+  text-decoration: underline;
+  text-decoration-color: rgba(34,211,238,0.35);
+  text-underline-offset: 3px;
+}
+.hero-body a:hover { text-decoration-color: #67e8f9; }
+
+@media (max-width: 720px) {
+  .diagram-block.diagram-hero { padding: 28px 22px 26px; }
+  .hero-quote { font-size: 32px; }
+  .hero-attrib { margin-bottom: 22px; }
+}
+
+/* Roadmap ladder — phased vertical list with a connecting rail through the numbers */
+.diagram-block.diagram-roadmap-ladder {
+  background: linear-gradient(180deg, rgba(11,13,18,0.98), rgba(7,8,11,0.98));
+  border: 1px solid rgba(34,211,238,0.18);
+  border-radius: var(--r-md);
+  padding: 0;
+  color: #e2e8f0;
+  overflow: hidden;
+}
+
+/* Phase header — full-width band with a label and goal */
+.roadmap-phase-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 28px 14px 28px;
+  background: linear-gradient(90deg, rgba(34,211,238,0.06), transparent 60%);
+  border-bottom: 1px solid rgba(148,163,184,0.10);
+}
+.roadmap-phase-header + .roadmap-step,
+.roadmap-step + .roadmap-step {
+  border-top: 1px solid rgba(148,163,184,0.08);
+}
+.roadmap-phase-header:not(:first-child) {
+  margin-top: 4px;
+  border-top: 1px dashed rgba(148,163,184,0.20);
+}
+.roadmap-phase-num {
+  font-family: ui-monospace, "JetBrains Mono", Menlo, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #67e8f9;
+  padding: 4px 10px;
+  border: 1px solid rgba(34,211,238,0.4);
+  border-radius: 999px;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+.roadmap-phase-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.roadmap-phase-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: -0.01em;
+}
+.roadmap-phase-sub {
+  font-size: 13px;
+  color: rgba(148,163,184,0.85);
+}
+
+/* Step row — circle number on a rail, body, status pill */
+.roadmap-step {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 28px;
+  position: relative;
+}
+.roadmap-step::before {
+  /* the connecting rail behind the number circles */
+  content: "";
+  position: absolute;
+  left: 50px; /* 28px padding + 22px (half of 44px circle) */
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: linear-gradient(180deg, rgba(34,211,238,0.45), rgba(34,211,238,0.15));
+  z-index: 0;
+}
+.roadmap-step-foundation::before {
+  background: linear-gradient(180deg, rgba(251,191,36,0.55), rgba(251,191,36,0.25));
+}
+.roadmap-step-now::before {
+  background: linear-gradient(180deg, rgba(34,211,238,0.55), rgba(34,211,238,0.35));
+}
+.roadmap-step-next::before {
+  background: linear-gradient(180deg, rgba(34,211,238,0.30), rgba(148,163,184,0.20));
+}
+.roadmap-step-later::before {
+  background: rgba(148,163,184,0.18);
+}
+/* Don't extend the rail past the last step in a phase — the phase header divider already separates them.
+   This is handled by the phase-header's own background covering the rail above it. */
+
+.roadmap-step-num {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ui-monospace, "JetBrains Mono", Menlo, monospace;
+  font-size: 18px;
+  font-weight: 800;
+  background: #0b0d12;
+  border: 2px solid rgba(148,163,184,0.45);
+  color: rgba(226,232,240,0.95);
+  letter-spacing: -0.02em;
+}
+.roadmap-step-foundation .roadmap-step-num {
+  border-color: #fbbf24;
+  color: #fbbf24;
+  box-shadow: 0 0 0 4px rgba(11,13,18,1), 0 0 14px rgba(251,191,36,0.35);
+}
+.roadmap-step-now .roadmap-step-num {
+  border-color: #22d3ee;
+  color: #67e8f9;
+  box-shadow: 0 0 0 4px rgba(11,13,18,1), 0 0 14px rgba(34,211,238,0.4);
+}
+.roadmap-step-next .roadmap-step-num {
+  border-color: rgba(34,211,238,0.55);
+  color: #a5f3fc;
+  box-shadow: 0 0 0 4px rgba(11,13,18,1);
+}
+.roadmap-step-later .roadmap-step-num {
+  border-color: rgba(148,163,184,0.35);
+  color: rgba(148,163,184,0.85);
+  box-shadow: 0 0 0 4px rgba(11,13,18,1);
+}
+
+.roadmap-step-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.roadmap-step-name {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #f1f5f9;
+}
+.roadmap-step-name-sub {
+  font-weight: 500;
+  color: rgba(148,163,184,0.85);
+  font-size: 14px;
+}
+.roadmap-step-tag {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(203,213,225,0.78);
+}
+.roadmap-step-later .roadmap-step-name { color: rgba(226,232,240,0.78); }
+.roadmap-step-later .roadmap-step-tag  { color: rgba(203,213,225,0.55); }
+
+.roadmap-step-status {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 720px) {
+  .roadmap-phase-header { padding: 18px 18px 10px 18px; gap: 12px; }
+  .roadmap-phase-title { font-size: 17px; }
+  .roadmap-step { padding: 12px 18px; gap: 14px; flex-wrap: wrap; }
+  .roadmap-step::before { left: 40px; }
+  .roadmap-step-num { flex-basis: 40px; width: 40px; height: 40px; font-size: 16px; }
+  .roadmap-step-status { flex-basis: 100%; padding-left: 54px; }
+}
+
+/* Showcase callout — for OS and any future "wild but not a daily-driver" entries */
+.diagram-block.diagram-app-showcase {
+  background: linear-gradient(180deg, rgba(11,13,18,0.92), rgba(7,8,11,0.95));
+  border: 1px dashed rgba(148,163,184,0.35);
+  border-radius: var(--r-md);
+  padding: 18px 22px;
+  display: grid;
+  gap: 10px;
+  color: #cbd5e1;
+}
+.app-showcase-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.app-showcase-tag {
+  font-family: ui-monospace, "JetBrains Mono", Menlo, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(148,163,184,0.85);
+  border: 1px solid rgba(148,163,184,0.35);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.app-showcase-name {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #e2e8f0;
+}
+.app-showcase-body {
+  color: rgba(203,213,225,0.85);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
 @media (max-width: 720px) {
   .app-shape-row { grid-template-columns: 1fr; }
   .diagram-app-grid { grid-template-columns: 1fr 1fr; }
@@ -3279,3 +3652,78 @@ svg .chip-ink {
   .spec-table th, .spec-table td { padding: 8px 10px; }
   pre.code, .tree { font-size: 12px; padding: 14px 16px; }
 }
+
+/* ============================================================
+   Shared brand visuals — injected from shared/brand.css by build.py.
+   This is the SINGLE SOURCE consumed by both the site and the Slidev
+   decks. Do NOT edit between the markers by hand — edit shared/brand.css
+   and run `python3 build.py`.
+   ============================================================ */
+/* BUILD:BRAND-START */
+/* ============================================================
+   shared/brand.css — SINGLE SOURCE for the Mind reusable visual blocks.
+
+   This file is the one definition of the brand animated/diagram
+   components. Both consumers pull from it:
+
+     • Site   — build.py injects this file into site/styles.css
+                between the BUILD:BRAND markers.
+     • Slides — slides/styles/index.css @imports it (Vite).
+
+   Edit the visuals HERE, run `python3 build.py`, and both the
+   published site and the Slidev decks pick up the change.
+   Keep everything class-scoped and self-contained (literal colors,
+   no dependency on host stylesheet variables) so it renders
+   identically in both toolchains.
+   ============================================================ */
+
+/* ---- .mind-mark — animated wordmark -------------------------------
+   "Decentralized Network In Mind" → the four cyan initials fly
+   straight into MIND. CSS-only (runs on render); cinematic dark panel.
+   Markup: <div class="mind-mark"><div class="ln"> …spans… </div></div>
+   each capital span carrying style="--dx:<n>ch".
+   ------------------------------------------------------------------- */
+.mind-mark{
+  --hold:1.9s;            /* how long the sentence shows before collapsing */
+  --move:1.05s;          /* duration of the fly-together */
+  --scale:2.55;          /* how large the surviving letters grow */
+  display:flex;align-items:center;justify-content:center;min-height:5.5em;
+  font-family:ui-monospace,"JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
+}
+/* add `.panel` for the boxed, cinematic dark-panel treatment (site hero);
+   omit it to let the wordmark glow straight on the background (deck cover). */
+.mind-mark.panel{
+  margin:16px 0 32px;
+  border:1px solid #1e2939;border-radius:12px;overflow:hidden;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 45%, rgba(34,211,238,.08) 0, transparent 60%),
+    linear-gradient(180deg,#0b0d12,#07080b);
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
+}
+.mind-mark .ln{ white-space:nowrap;font-size:clamp(20px,3.6vw,46px);line-height:1;font-weight:600; }
+.mind-mark .ch{ display:inline-block;width:1ch;text-align:center; }
+.mind-mark .ch .g{ display:inline-block;color:#7d8694;will-change:transform,opacity; }
+.mind-mark .c .g{ color:#67e8f9;text-shadow:0 0 .5em rgba(34,211,238,.35); }
+.mind-mark .c{ animation:mmMove var(--move) cubic-bezier(.6,0,.2,1) var(--hold) both; }
+.mind-mark .c .g{ animation:mmGrow var(--move) cubic-bezier(.6,0,.2,1) var(--hold) both; }
+.mind-mark .l .g{ animation:mmFade .55s ease var(--hold) both; }
+@keyframes mmMove{ to{ transform:translateX(var(--dx)); } }
+@keyframes mmGrow{ to{ transform:scale(var(--scale));
+  text-shadow:0 0 .8em rgba(34,211,238,.65),0 0 1.6em rgba(34,211,238,.32); } }
+@keyframes mmFade{ to{ opacity:0;transform:scale(.18) translateY(.1em); } }
+@media print, (prefers-reduced-motion: reduce){
+  .mind-mark .c,.mind-mark .c .g,.mind-mark .l .g{ animation:none; }
+  .mind-mark .l .g{ opacity:0; }
+  .mind-mark .c{ transform:translateX(var(--dx)); }
+  .mind-mark .c .g{ transform:scale(var(--scale)); }
+}
+/* BUILD:BRAND-END */
+
+/* Doc hero header — animated wordmark paired with a real h1 + tagline */
+.doc-hero{ text-align:center; margin:4px 0 30px; }
+.doc-hero .mind-mark{ margin:0 0 20px; }
+.doc-hero-title{
+  font-size:2.1rem; font-weight:800; letter-spacing:-0.02em; line-height:1.12;
+  color:var(--ink); margin:0 0 8px; border:0; padding:0;
+}
+.doc-hero-sub{ font-size:1.05rem; color:var(--muted); margin:0 auto; max-width:54ch; }

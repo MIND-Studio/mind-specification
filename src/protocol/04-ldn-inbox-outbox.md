@@ -40,8 +40,6 @@ Cross-pod messaging. How one user's app sends a message to another user's pod, h
   <div class="msg-flow-note">No central server. No queue infrastructure. Both sides keep their own copy in their own pod — Alice in <code>/agents/audit/</code> (or <code>/apps/{x}/sent/</code>), Bob in <code>/inbox/</code> then routed to the relevant app folder.</div>
 </div>
 
-> Status: drafted v0.1. Anchored to [README →](../README.md). Depends on [§1](01-pod-layout.md).
-
 ---
 
 ## Purpose

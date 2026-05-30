@@ -1,0 +1,134 @@
+/* Single source of truth for reusable brand visuals (the .mind-mark
+   animation, shared with the site). Edit shared/brand.css, not here. */
+@import '../../shared/brand.css';
+
+/* ============================================================
+   Mind brand tokens for Slidev — mirrored from site/styles.css
+   (dark cinematic palette; decks present dark by default)
+   ============================================================ */
+:root {
+  --mind-accent: #22d3ee;
+  --mind-accent-bright: #67e8f9;
+  --mind-accent-soft: #a5f3fc;
+  --mind-canvas: #08090b;
+  --mind-panel: #111114;
+  --mind-panel-grad-top: #0b0d12;
+  --mind-panel-grad-bot: #07080b;
+  --mind-ink: #f5f5f5;
+  --mind-ink-soft: #e2e8f0;
+  --mind-muted: #94a3b8;
+  --mind-line: rgba(148, 163, 184, 0.12);
+  --mind-line-cyan: rgba(34, 211, 238, 0.2);
+  --mind-warn: #fbbf24;
+
+  --mind-font-sans: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Display",
+    "Segoe UI", system-ui, Roboto, sans-serif;
+  --mind-font-mono: ui-monospace, "JetBrains Mono", "IBM Plex Mono", "SF Mono",
+    Menlo, Consolas, monospace;
+
+  /* Slidev theme variable overrides */
+  --slidev-theme-primary: #22d3ee;
+}
+
+/* ---- Global deck canvas ---- */
+.slidev-layout {
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(34, 211, 238, 0.05) 0%, transparent 60%),
+    linear-gradient(180deg, var(--mind-panel-grad-top) 0%, var(--mind-panel-grad-bot) 100%);
+  color: var(--mind-ink);
+  font-family: var(--mind-font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.slidev-layout h1,
+.slidev-layout h2,
+.slidev-layout h3 {
+  color: var(--mind-ink);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+.slidev-layout h1 { font-size: 2.4em; line-height: 1.1; }
+.slidev-layout h2 {
+  font-size: 1.5em;
+  color: var(--mind-ink-soft);
+  border-bottom: 1px solid var(--mind-line);
+  padding-bottom: 0.3em;
+  margin-bottom: 0.6em;
+}
+
+.slidev-layout a {
+  color: var(--mind-accent-bright);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(34, 211, 238, 0.35);
+}
+.slidev-layout strong { color: var(--mind-accent-bright); font-weight: 700; }
+.slidev-layout code {
+  font-family: var(--mind-font-mono);
+  font-size: 0.9em;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(71, 85, 105, 0.5);
+  border-radius: 3px;
+  padding: 0.08em 0.35em;
+  color: var(--mind-accent-soft);
+}
+.slidev-layout blockquote {
+  border-left: 3px solid var(--mind-accent);
+  color: var(--mind-muted);
+  padding-left: 0.9em;
+}
+
+.slidev-layout ul { list-style: none; padding-left: 0.2em; }
+.slidev-layout ul li {
+  position: relative;
+  padding-left: 1.2em;
+  margin: 0.45em 0;
+  line-height: 1.5;
+}
+.slidev-layout ul li::before {
+  content: "›";
+  position: absolute;
+  left: 0;
+  color: var(--mind-accent);
+  font-weight: 700;
+}
+
+/* ---- Reusable label / tag utility (letter-spaced uppercase, short labels only) ---- */
+.mind-label {
+  font-family: var(--mind-font-mono);
+  font-size: 0.7em;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mind-accent-bright);
+}
+
+/* ---- Tables (protocol §1–§4, etc.) ---- */
+.slidev-layout table {
+  border-collapse: collapse;
+  font-size: 0.85em;
+}
+.slidev-layout th,
+.slidev-layout td {
+  border: 1px solid var(--mind-line);
+  padding: 0.5em 0.8em;
+  text-align: left;
+}
+.slidev-layout th {
+  font-family: var(--mind-font-mono);
+  font-size: 0.85em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--mind-accent-bright);
+  background: rgba(34, 211, 238, 0.06);
+}
+
+/* corner brackets on diagram panels reused from the site */
+.mind-bracket-panel {
+  position: relative;
+  border: 1px solid #1e2939;
+  border-radius: 12px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(34, 211, 238, 0.06) 0%, transparent 70%),
+    linear-gradient(180deg, #0b0d12 0%, #07080b 100%);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+}

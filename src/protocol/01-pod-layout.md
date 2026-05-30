@@ -5,7 +5,7 @@ The agreed set of paths a Mind-compliant pod has, what each one is for, who owns
 <div class="diagram-block protocol-intro">
   <div class="protocol-intro-meta">
     <span class="protocol-intro-tag">§1 · DRAFTED v0.1</span>
-    <h3 class="protocol-intro-title">A shared map of every Mind pod</h3>
+    <h3 class="protocol-intro-title">A shared map of every Mind-compliant pod</h3>
   </div>
   <p class="protocol-intro-body">A Mind-compliant pod has well-known folders for agents, apps, and shared data. Apps don't invent paths — they use the agreed map. This is what makes your calendar entry visible to multiple apps, your agent fleet operable from any tool, and your inbox findable by senders on other pods.</p>
   <div class="protocol-intro-key">
@@ -40,12 +40,18 @@ The agreed set of paths a Mind-compliant pod has, what each one is for, who owns
     </div>
     <div class="zone-desc">Per-app private state, sandboxed by app. The Marketplace app reads <code>/apps/marketplace/</code>; it cannot peek into <code>/apps/health/</code> without an explicit grant.</div>
     <div class="zone-paths">
+      <span class="zone-path-chip">dock/</span>
       <span class="zone-path-chip">compass/</span>
+      <span class="zone-path-chip">drive/</span>
+      <span class="zone-path-chip">docs/</span>
+      <span class="zone-path-chip">todo/</span>
       <span class="zone-path-chip">marketplace/</span>
-      <span class="zone-path-chip">health/</span>
       <span class="zone-path-chip">chat/</span>
-      <span class="zone-path-chip">codespaces/</span>
       <span class="zone-path-chip">social/</span>
+      <span class="zone-path-chip">codespaces/</span>
+      <span class="zone-path-chip">health/</span>
+      <span class="zone-path-chip">video/</span>
+      <span class="zone-path-chip">flow/</span>
     </div>
   </div>
 
@@ -68,7 +74,36 @@ The agreed set of paths a Mind-compliant pod has, what each one is for, who owns
   </div>
 </div>
 
-> Status: drafted v0.1. Anchored to [README →](../README.md).
+## The Mind Protocol at a glance
+
+The Mind protocol is split into four small sections. §1 is the foundation; §2-§4 build on it.
+
+<div class="diagram-block diagram-protocol-index">
+  <a class="proto-card proto-card-current" href="01-pod-layout.md">
+    <div class="proto-card-num">§1</div>
+    <div class="proto-card-name">Pod layout</div>
+    <div class="proto-card-tag">The agreed map of paths every Mind-compliant pod has. The foundation everything else stands on.</div>
+    <div class="proto-card-meta">YOU ARE HERE</div>
+  </a>
+  <a class="proto-card" href="02-agent-control.md">
+    <div class="proto-card-num">§2</div>
+    <div class="proto-card-name">Agent control</div>
+    <div class="proto-card-tag">How an operator (Compass) and the agent runtime coordinate through the pod, without calling each other.</div>
+    <div class="proto-card-meta">Depends on §1</div>
+  </a>
+  <a class="proto-card" href="03-services-manifest.md">
+    <div class="proto-card-num">§3</div>
+    <div class="proto-card-name">Services manifest</div>
+    <div class="proto-card-tag">How external services (Mind Cubes, hosted APIs, friends' boxes) advertise themselves so apps and workers can discover and call them.</div>
+    <div class="proto-card-meta">Depends on §1 · Companion: Capabilities ref</div>
+  </a>
+  <a class="proto-card" href="04-ldn-inbox-outbox.md">
+    <div class="proto-card-num">§4</div>
+    <div class="proto-card-name">LDN inbox + outbox</div>
+    <div class="proto-card-tag">Cross-pod messaging. Mind-shaped notifications on top of W3C Linked Data Notifications.</div>
+    <div class="proto-card-meta">Depends on §1</div>
+  </a>
+</div>
 
 ---
 
@@ -81,6 +116,17 @@ Today each prototype invents its own pod paths. `marketplace` would want `/listi
 - **Agent zone** (`/agents/`) — everything the agent runtime owns
 - **Apps zone** (`/apps/{name}/`) — per-app private state, sandboxed by app
 - **Shared user data** (`/calendar/`, `/contacts/`, …) — top-level domains that any app or agent may read
+
+### Data domains vs. app surfaces
+
+A subtlety worth stating outright: the shared-data containers are **data domains, not apps**. `/calendar/` is your events; it is not "the calendar app." Two kinds of app sit on top of this map:
+
+- A **sandboxed app** (Marketplace, Social, Health) keeps its data inside `/apps/{name}/`. Nothing else reads it without a grant.
+- A **domain surface** (Calendar, Contacts, Todo) reads and writes a shared top-level domain and keeps only its config under `/apps/{name}/`. The data outlives the surface — swap the app, the data stays.
+
+This is why `/tasks/` (the domain) and the Todo app (its surface) are not duplicates: the lists live in `/tasks/` so Flow and agents read them as shared user-data, while `/apps/todo/` holds only Todo's config, share-pointers, and agent artifacts. See [Apps — two flavors of app](../apps.md).
+
+The **Dock** launcher is the human-facing reader of the `/apps/` zone: it lists which apps have written to your pod to build your home screen. See [Apps — the shell](../apps.md).
 
 ---
 
@@ -117,8 +163,12 @@ A Mind-compliant pod has the following top-level containers. Not every pod has e
 │       ├── skills/             # learned skills (v0.2)
 │       └── hand.ttl            # agent's pod-scope declaration
 │
-├── apps/                       # per-app private state — sandboxed by app
+├── apps/                       # per-app config + sandboxed data — see "two flavors" above
+│   ├── dock/                   # launcher layout: pinned + ordered app tiles
 │   ├── compass/                # operator state (if/when Compass stores in pod)
+│   ├── drive/                  # file-browser app state
+│   ├── docs/                   # block pages + databases
+│   ├── todo/                   # Todo config + share-pointers + artifacts (lists live in /tasks/)
 │   ├── marketplace/
 │   │   └── listings/           # schema:Offer items
 │   ├── health/
@@ -129,17 +179,20 @@ A Mind-compliant pod has the following top-level containers. Not every pod has e
 │   │   ├── repos/{owner}/{name}/   # bare git refs + metadata
 │   │   ├── pages-config.ttl        # Mind Pages publishing config
 │   │   └── public-sites/{name}/    # world-readable published sites
-│   └── social/
-│       ├── posts/              # as:Note posts
-│       ├── friends/            # as:Follow references
-│       └── duels/              # async game state
+│   ├── social/
+│   │   ├── posts/              # as:Note posts
+│   │   ├── friends/            # as:Follow references
+│   │   └── duels/              # async game state
+│   ├── video/
+│   │   └── projects/{name}/    # timelines + renders
+│   └── flow/                   # missions + sprints (views over other apps)
 │
 ├── inbox/                      # LDN inbox — §4 — app-agnostic
 │
-├── calendar/                   # ical:Vevent  (v0.2) — shared user data
-├── tasks/                      # schema:Action (v0.2)
+├── calendar/                   # ical:Vevent — Calendar surface (v0.2) — shared user data
+├── tasks/                      # task lists: ical:Vtodo in schema:ItemList — Todo surface (v0.2)
 ├── projects/                   # schema:Project (v0.2)
-├── contacts/                   # vcard:Individual (v0.2)
+├── contacts/                   # vcard:Individual — Contacts surface (v0.2)
 ├── research/                   # used by Researcher agent + reading-list apps
 │   ├── bookmarks/              # schema:WebPage
 │   ├── sources/                # downloaded sources
@@ -285,7 +338,7 @@ An app **must not** 404 if an unexpected top-level container exists — pods are
 
 ## Open questions
 
-- Should `/apps/{name}/` be required to declare a manifest (`/apps/{name}/manifest.ttl`) so the user can see which apps have touched their pod?
+- Should `/apps/{name}/` be required to declare a manifest (`/apps/{name}/manifest.ttl`) so the user can see which apps have touched their pod? This is what the **Dock** launcher would consume to build the home screen — so the manifest shape (name, icon, hosted URL) is really a Dock requirement.
 - Should `research/`, `wishlist/`, `calendar/` etc. move under `/apps/{some-app}/` if no shared use case emerges, or stay top-level as user-data domains?
 - Is `mind:` the right vocab prefix, or do we want a different brand prefix (the umbrella might not be called "Mind" by the time we ship)?
 - Is the Merkle-chained audit log worth v0.1, or ceremony that belongs in v0.2 once we know what threats we're defending against?

@@ -5,18 +5,22 @@ on:
     branches: [main]
     paths:
       - 'src/**'
+      - 'site/**'
       - 'build.py'
+      - 'slides/**'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: write   # commit rebuilt viewers back to the repo
+  pages: write      # deploy to GitHub Pages
+  id-token: write   # OIDC token for the Pages deployment
 
 concurrency:
-  group: build-${{ github.ref }}
+  group: pages
   cancel-in-progress: false
 
 jobs:
-  rebuild:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,12 +36,42 @@ jobs:
 
       - name: Commit rebuilt viewers if changed
         run: |
-          if [ -z "$(git status --porcelain '*.html')" ]; then
+          if [ -z "$(git status --porcelain 'site/*.html')" ]; then
             echo "No HTML changes — nothing to commit."
-            exit 0
+          else
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add 'site/*.html'
+            git commit -m "Rebuild HTML viewers from src/ [skip ci]"
+            git push
           fi
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add '*.html'
-          git commit -m "Rebuild HTML viewers from src/ [skip ci]"
-          git push
+
+      # Slidev decks build into site/slides/{pitch,technical}. Generated only in CI —
+      # the commit step above scopes to site/*.html, so this output is never committed back.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: slides/package-lock.json
+
+      - name: Build Slidev decks
+        run: |
+          cd slides
+          npm ci
+          npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -39,8 +39,6 @@ How an external app (Compass, or anything else that speaks the protocol) reads a
   </div>
 </div>
 
-> Status: drafted v0.1. Anchored to [README →](../README.md). Depends on [§1](01-pod-layout.md).
-
 ---
 
 ## Purpose
